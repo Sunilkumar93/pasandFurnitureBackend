@@ -1,21 +1,19 @@
 const express = require("express");
-const { FurnitureModel } = require("../models/furnitureSchema");
+const { KitchenModel } = require("../models/furnitureSchema");
 
-// wardrobes, bed
+const KitchenRouter = express.Router();
 
-const furnitureRouter = express.Router();
-
-furnitureRouter.get("/", async (req, res) => {
+KitchenRouter.get("/", async (req, res) => {
   // const data = req.body
   try {
-    const furniture = await FurnitureModel.find();
+    const furniture = await KitchenModel.find();
     res.send(furniture);
   } catch (err) {
     res.send({ msg: "Could not get furniture" });
   }
 });
 
-furnitureRouter.post("/add", async (req, res) => {
+KitchenRouter.post("/add", async (req, res) => {
   try {
     let data = req.body;
     data.img = data.img.split(",");
@@ -24,7 +22,7 @@ furnitureRouter.post("/add", async (req, res) => {
       ((data.price - data.discountPrice) / data.price) * 100
     );
 
-    let furniture = new FurnitureModel(data);
+    let furniture = new KitchenModel(data);
     await furniture.save();
     res.send(furniture);
   } catch (err) {
@@ -33,5 +31,5 @@ furnitureRouter.post("/add", async (req, res) => {
 });
 
 module.exports = {
-  furnitureRouter,
+  KitchenRouter,
 };

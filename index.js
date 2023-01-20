@@ -1,9 +1,11 @@
 const express = require("express");
-const { connect } = require("./configs/db");
 require("dotenv").config();
+const { connect } = require("./configs/db");
 const cors = require("cors");
 const { homeDecorRoutes } = require("./routes/homeDocor.routes");
-const { furnitureRouter}=require("./routes/furnitureRoute")
+const { furnitureRouter}=require("./routes/furnitureRoute");
+const { lightRoutes } = require("./routes/light.routes");
+const {KitchenRouter}=require("./routes/KitchenRouter")
 
 
 
@@ -14,8 +16,9 @@ app.use(express.json());
 
 //routes
 app.use("/homeDecor", homeDecorRoutes);
-app.use("/fur", furnitureRouter)
-
+app.use("/fur",furnitureRouter)
+app.use("/light",lightRoutes)
+app.use("/kitchen", KitchenRouter)
 
 
 app.listen(process.env.port, async () => {

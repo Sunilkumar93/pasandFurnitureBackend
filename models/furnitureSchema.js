@@ -13,10 +13,11 @@ warranty:Number
 })
 
 const FurnitureModel=mongoose.model("furniture", furnitureSchema)
+const KitchenModel=mongoose.model("kitchen", furnitureSchema)
 
 
 
 
 module.exports={
-    FurnitureModel
+    FurnitureModel, KitchenModel
 }
