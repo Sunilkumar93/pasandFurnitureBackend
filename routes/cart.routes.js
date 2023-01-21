@@ -31,4 +31,30 @@ cartRouter.get("/product", async (req, res) => {
   }
 });
 
+cartRouter.delete("/delete/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await CartModel.findByIdAndDelete(id);
+    res.send({ msg: "deleted successfully", error: false });
+  } catch (error) {
+    res.status(500).send({
+      error: true,
+      msg: "something went wrong while deleteing item from cart",
+    });
+  }
+});
+cartRouter.update("/update/:id", async (req, res) => {
+  const id = req.params.id;
+  const payload = req.body;
+  try {
+   const updated= await CartModel.findByIdAndUpdate({_id,id},payload);
+    res.send({ data: updated, error: false });
+  } catch (error) {
+    res.status(500).send({
+      error: true,
+      msg: "something went wrong while updating item from cart",
+    });
+  }
+});
+
 module.exports = { cartRouter };
