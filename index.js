@@ -3,23 +3,33 @@ require("dotenv").config();
 const { connect } = require("./configs/db");
 const cors = require("cors");
 const { homeDecorRoutes } = require("./routes/homeDocor.routes");
-const { furnitureRouter}=require("./routes/furnitureRoute");
+const { furnitureRouter } = require("./routes/furniture.routes");
 const { lightRoutes } = require("./routes/light.routes");
-const {KitchenRouter}=require("./routes/KitchenRouter")
-
-
+const { KitchenRouter } = require("./routes/Kitchen.routes");
+const { userRouter } = require("./routes/users.routes");
+const { cartRouter } = require("./routes/cart.routes");
+const { orderedRoutes } = require("./routes/order.routes");
+const { authenticate } = require("./middleware/auth.middleware");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 //routes
 app.use("/homeDecor", homeDecorRoutes);
-app.use("/fur",furnitureRouter)
-app.use("/light",lightRoutes)
-app.use("/kitchen", KitchenRouter)
+app.use("/furniture", furnitureRouter);
+app.use("/light", lightRoutes);
+app.use("/kitchen", KitchenRouter);
 
+//auth routes
+app.use("/user", userRouter);
+
+//order routes
+app.use("/orderedItem", orderedRoutes);
+
+//cart routes
+app.use(authenticate);
+app.use("/cartItem", cartRouter);
 
 app.listen(process.env.port, async () => {
   try {
