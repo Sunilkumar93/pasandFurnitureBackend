@@ -7,7 +7,7 @@ const furnitureRouter = express.Router();
 
 furnitureRouter.get("/product", async (req, res) => {
   const sort = req.query.sort;
-  const filter = req.query.filter;
+  const filter = req.query.filter||"";
   const off = +req.query.off || 0;
 
   let sortBy;
@@ -19,7 +19,7 @@ furnitureRouter.get("/product", async (req, res) => {
     sortBy = { _id: 1 };
   }
   try {
-    if (filter) {
+    if (filter.length>0) {
         const products = await FurnitureModel.find()
           .where("off")
           .gte(off)

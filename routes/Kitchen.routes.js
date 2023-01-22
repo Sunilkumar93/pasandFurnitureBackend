@@ -5,7 +5,7 @@ const KitchenRouter = express.Router();
 
 KitchenRouter.get("/product", async (req, res) => {
   const sort = req.query.sort;
-  const filter = req.query.filter;
+  const filter = req.query.filter||"";
   const off = +req.query.off || 0;
 
   let sortBy;
@@ -17,7 +17,7 @@ KitchenRouter.get("/product", async (req, res) => {
     sortBy = { _id: 1 };
   }
   try {
-    if (filter) {
+    if (filter.length>0) {
       const products = await KitchenModel.find()
         .where("off")
         .gte(off)
